@@ -36,7 +36,7 @@ ModSpeed := 3 ;multiplies or divides mousespeed
 LBdown := 0 ;state of toggling left mouse button (dragging)
 
 ;reload this script
-^Enter:: Run, "C:\Users\Delta 6\Desktop\Literal Garbage\mouse.ahk"
+^Enter:: Run, "C:\Users\Delta 6\Desktop\Literal Garbage\ahkscripts\mouse.ahk"
 	return
 
 ;function for cycling through layers
@@ -68,11 +68,31 @@ RemoveToolTip:
 	return
 	}
 
-;reference for gui later
-;^g::
-;	gui, add, edit, x6 y6 w300, enter me
-;	gui, show
-;	return
+;mouse mode
+mousemode:
+  Layer := 1
+	ToolTip, Layer: %Layer%, 10, 10
+	SetTimer, RemoveToolTip, 1000
+	return
+;normal mode
+normalmode:
+  Layer := 0
+	ToolTip, Layer: %Layer%, 10, 10
+	SetTimer, RemoveToolTip, 1000
+	return
+
+#w::gosub, mousemode
+#a::gosub, mousemode
+#s::gosub, mousemode
+#d::gosub, mousemode
+#j::gosub, mousemode
+#l::
+  Layer := 2
+  ToolTip, Layer: %Layer%, 10, 10
+  SetTimer, RemoveToolTip, 1000
+  return
+#Space::gosub, normalmode
+~escape::gosub, normalmode
 
 ;layer 2
 ;numpad
@@ -106,25 +126,31 @@ RemoveToolTip:
 ;click
 	q::MouseClick, left
 	e::MouseClick, right
-;double-click
-	^q::
-	{
-	MouseClick, left
-	MouseClick, left
-	}
+  ~q & e::Click, middle
+  ;toggle middle
+  middle := 0
+  z::
+    if(middle = 0){
+      Click, middle, down
+      middle := 1
+    }else{
+      Click, middle, up
+      middle := 0
+    }
+    return
+
 ;toggle left-click
 	+q::
 	{
 		if (LBdown = 0){
 			LBdown := 1
-			SendInput, {LButton Down}
+			Click, left, down
+      ;SendInput, {LButton Down}
 		}else{
-			SendInput, {LButton Up}
+      Click, left, up
+			;SendInput, {LButton Up}
 		}
 	}
-;??
-	;^e::
-	;+e::
 ;Shift(slower)
 	#if (GetKeyState("Shift") && Layer = 1)
 	{
@@ -161,8 +187,6 @@ RemoveToolTip:
 		~a & w::MouseMove, -MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
 		~w & d::MouseMove, MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
 		~d & w::MouseMove, MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
-
-	;!!!why arn't these working?  V
 		~a & s::MouseMove, -MouseSpeed * ModSpeed, MouseSpeed * ModSpeed, 0, R
 		~s & a::MouseMove, -MouseSpeed * ModSpeed, MouseSpeed * ModSpeed, 0, R
 		~s & d::MouseMove, MouseSpeed * ModSpeed, MouseSpeed * ModSpeed, 0, R

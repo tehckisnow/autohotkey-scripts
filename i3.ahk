@@ -20,7 +20,7 @@ Return
 Return
 
 #g::
-	Run, C:\Users\chetw\AppData\Local\GitHubDesktop\GitHubDesktop.exe
+	Run, C:\Users\"Delta 6"\AppData\Local\GitHubDesktop\GitHubDesktop.exe
 Return
 
 #x::
@@ -30,6 +30,10 @@ Return
 #+q::
 	Send !{F4}
 Return
+#q::
+	Send !{F4}
+Return
+
 
 #Enter::
 	Run, cmd /K C:\Users\"Delta 6"\Desktop\"Literal Garbage"\aliases.cmd
