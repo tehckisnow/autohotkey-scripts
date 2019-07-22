@@ -3,6 +3,13 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+#SingleInstance, Force
+CoordMode, ToolTip, Screen
+
+;init msg
+ToolTip, MouseScript init, 10, 10
+SetTimer, RemoveToolTip, 1000
+
 ;TODO
 ;ctrl+a+s and ctrl+d+s (both fast lower diagonals) are not working
 ;add "tap ctrl for esc"
@@ -36,7 +43,7 @@ ModSpeed := 3 ;multiplies or divides mousespeed
 LBdown := 0 ;state of toggling left mouse button (dragging)
 
 ;reload this script
-^Enter:: Run, "C:\Users\Delta 6\Desktop\Literal Garbage\ahkscripts\mouse.ahk"
+^Enter:: Run, "C:\Users\Delta 6\Desktop\Literal Garbage\ahkscripts\autohotkey-scripts\mouse.ahk"
 	return
 
 ;function for cycling through layers
@@ -59,14 +66,14 @@ RemoveToolTip:
 	ToolTip
 	return
 
-;switch layer hotkey (default !Space)
-!Space::
-	{
-	Layer := SwitchLayer(Layer, MaxLayer)
-	ToolTip, Layer: %Layer%, 10, 10
-	SetTimer, RemoveToolTip, 1000
-	return
-	}
+; ;switch layer hotkey (default !Space)
+; !Space::
+; 	{
+; 	Layer := SwitchLayer(Layer, MaxLayer)
+; 	ToolTip, Layer: %Layer%, 10, 10
+; 	SetTimer, RemoveToolTip, 1000
+; 	return
+; 	}
 
 ;mouse mode
 mousemode:
@@ -86,13 +93,15 @@ normalmode:
 #s::gosub, mousemode
 #d::gosub, mousemode
 #j::gosub, mousemode
-#l::
+#k::
   Layer := 2
   ToolTip, Layer: %Layer%, 10, 10
   SetTimer, RemoveToolTip, 1000
   return
 #Space::gosub, normalmode
 ~escape::gosub, normalmode
+~lctrl up::gosub, normalmode
+^i::gosub, mousemode
 
 ;layer 2
 ;numpad
@@ -114,10 +123,24 @@ normalmode:
 #if (Layer = 1)
 {
   ;vim goodies
-	h::MouseClick, WheelLeft
-	l::MouseClick, WheelRight
-	j::MouseClick, WheelDown
-	k::MouseClick, WheelUp
+	h::Left ;MouseClick, WheelLeft
+	l::Right ;MouseClick, WheelRight
+	j::Down ;MouseClick, WheelDown
+	k::Up ;MouseClick, WheelUp
+	+h::BS
+	+l::BS
+	+j::^Tab
+	+k::+^Tab ;--
+	g::Home
+	+g::End
+	/::^f
+	n::^g
+	+n::+^g
+	x::^w
+	+x::+^t
+	t::^t
+	r::F5
+	i::gosub, normalmode
 ;mouse movement with wasd
 	w::MouseMove, 0, -MouseSpeed, 0, R
 	a::MouseMove, -MouseSpeed, 0, 0, R
