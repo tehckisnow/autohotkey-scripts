@@ -42,6 +42,10 @@ MouseSpeed := 25 ;pixels mouse moves; modified by ModSpeed
 ModSpeed := 3 ;multiplies or divides mousespeed
 LBdown := 0 ;state of toggling left mouse button (dragging)
 
+;Shift + Win for escape
+;this only exists so I can use a specific weird keyboard
++LWin::send, {Esc}
+
 ;reload this script
 ^Enter:: Run, "C:\Users\Delta 6\Desktop\Literal Garbage\ahkscripts\autohotkey-scripts\mouse.ahk"
 	return

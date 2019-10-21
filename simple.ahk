@@ -36,20 +36,103 @@ Esc:: mode := 1
 #if (mode = 1)
 	{
 		i:: mode := 0
+		+i::
+			return
 		j:: send, {Down}
+		+j::
 		k:: send, {Up}
+		+k::
 		l:: send, {Right}
+		+l::
 		h:: send, {Left}
+		+h::
 		g:: send, {Home}
-		+G:: send, {End}
+		+g:: send, {End}
 		/:: send, {^f}
+		+/::
 		r:: send, {F5}
+		+r::
 		n:: send, {^g}
 		+n:: send, {^!g}
+		^n:: mode := 2
 		t:: send, {^t}
-		x:: send, {^F4}
-		+x:: send, {^+n}
+		+t::
+		;x:: send, {^F4}
+		;+x:: send, {^+n}
 		m:: mode := 2
+		+m::
+		q::MouseClick, left
+		+q::
+		!q::MouseClick, left
+		w::MouseMove, 0, -MouseSpeed, 0, R
+		^w::MouseMove, 0, -MouseSpeed * ModSpeed, 0, R
+		+w::MouseMove, 0, -MouseSpeed / ModSpeed, 0, R
+		e::MouseClick, right
+		!e::MouseClick, right
+		+e::MouseClick, right
+		y::
+		+y::
+		u::
+		+u::
+		o::
+		+o::
+		p::
+		+p::
+			return
+		a::MouseMove, -MouseSpeed, 0, 0, R
+		^a::MouseMove, -MouseSpeed * ModSpeed, 0, 0, R
+		+a::MouseMove, -MouseSpeed / ModSpeed, 0, 0, R
+		s::MouseMove, 0, MouseSpeed, 0, R
+		^s::MouseMove, 0, MouseSpeed * ModSpeed, 0, R
+		+s::MouseMove, 0, MouseSpeed / ModSpeed, 0, R
+		d::MouseMove, MouseSpeed, 0, 0, R
+		^d::MouseMove, MouseSpeed * ModSpeed, 0, 0, R
+		+d::MouseMove, MouseSpeed / ModSpeed, 0, 0, R
+		f::
+		+f::
+		z::
+		+z::
+		x::
+		+x::
+		c::
+		+c::
+		v::
+		+v::
+		b::
+		+b::
+		,::
+		.::
+		+,::
+		+.::
+		1::
+		2::
+		3::
+		4::
+		5::
+		6::
+		7::
+		8::
+		9::
+		0::
+		-::
+		=::
+		[::
+		]::
+		\::
+		
+		`::
+			return
+		;diagonal mouse movement
+		~w & a::MouseMove, -MouseSpeed, -MouseSpeed, 0, R
+		~a & w::MouseMove, -MouseSpeed, -MouseSpeed, 0, R
+		~w & d::MouseMove, MouseSpeed, -MouseSpeed, 0, R
+		~d & w::MouseMove, MouseSpeed, -MouseSpeed, 0, R
+		~a & s::MouseMove, -MouseSpeed, MouseSpeed, 0, R
+		~s & a::MouseMove, -MouseSpeed, MouseSpeed, 0, R
+		~s & d::MouseMove, MouseSpeed, MouseSpeed, 0, R
+		~d & s::MouseMove, MouseSpeed, MouseSpeed, 0, R
+		
+		;:: this is a comment (fix this to disable ; key) 
 		return
 	}
 #if
@@ -206,7 +289,7 @@ lctrl up::
 	#if (GetKeyState("LCtrl"))
 	{
 		~w & a::MouseMove, -MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
-		~a & w::MouseMove, -MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
+ 		~a & w::MouseMove, -MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
 		~w & d::MouseMove, MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
 		~d & w::MouseMove, MouseSpeed * ModSpeed, -MouseSpeed * ModSpeed, 0, R
 		~a & s::MouseMove, -MouseSpeed * ModSpeed, MouseSpeed * ModSpeed, 0, R

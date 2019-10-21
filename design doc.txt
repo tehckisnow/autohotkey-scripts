@@ -1,0 +1,149 @@
+; autohotkey script
+; [name subject to change]
+
+; ---------------------------------------------------------------------------
+; purpose: 
+;   to provide shortcuts and controls increasing efficiency by reducing the need for the user's fingers to stray far from 
+;   the home row of the keyboard by using;
+;     1. vim controls generalized to work with most common applications (making use of #ifActiveWindow if necessary, but preferably not)
+;     2. simulate useful hardware features that work even on a minimalist keyboard (like 30% or 40%) and reduce or eliminate reliance on having a mouse
+;       2a. mouse controls
+;       2b. numpad emulation
+;     3. general i3 style shortcuts (window switching, closing active window, jumping between virtual desktops, launching terminal or other common software, shortcut for dmenu-style application launching)
+;     4. other misc shortcuts, hotkeys, and text expansion
+;     5. I really want an external keyboard with a trackpoint but they are very expensive and I'm just a poor boy
+;
+; This document primarily exists to communicate my intention for this project when seeking advice from others on refining it's interface methods
+; tl;dr: which keys should I use to switch between keyboard layers/modes? Or are mod keys better?  Or both?
+
+; part one describes the current state of the most functional version of this script (all of these features work, but not all in the same version of the script)
+; part two describes things I don't know what to do about because they are subjective
+; -------------------------------------------------------------------------
+
+; PART 1.
+
+; Modes:
+
+;   Insert mode:
+;     keyboard largely operates as normal.
+;     ctrl + i switches to command mode
+;     win + w | a | s | d | j switches to mouse mode (this is because if you are about to use the mouse, you can move your hand 
+;       to this position ahead of time and just hit any of those keys with Win)
+
+;   Command mode:
+;     vim controls;
+;       h,j,k,l send arrow key signals (experimented with using mouse scrollwheel here, but found this to be overall better)
+;       Shift + h | j | k | l - 
+;         h and l - backspace (goes "back" one page in current tab in firefox, chrome, and windows explorer)
+;         j and k - switches current tab forward or backward in firefox and chrome 
+;       g - Home key
+;       shift + g - End key
+;       i - switches to insert mode
+;       esc - switches to normal mode
+;       mod + space - switches to normal mode
+;       / - ctrl + f
+;       n - next result
+;       shift + n - previous result
+;       r - f5
+;       t - new tab
+;       x - close current tab
+;       shift + x - undo close current tab
+;       [considering support for]
+;         moving tabs left or right
+;         opening/closing history and bookmarks sidebars (how to navigate these sidebars?  how to trigger pane switching? tab/shift+tab?)
+
+;   Mouse mode:
+;     w,a,s,d move the mouse.  diagonals such as a+w work.
+;     q - left-click
+;     e - right-click
+;     shift + q toggles left-click (useful for clicking and dragging)
+;     middle-click:
+;       q+e
+;       z toggles middle click (useful for scrolling in browsers)
+;     holding shift modifies the mouse's movement speed to be slower
+;     holding ctrl modifies the mouse's movement to be faster
+;     right now, because mouse mode and command mode are integrated as a single layer, the following keys are also used here;
+;       i - switches to insert mode
+;       esc - switches to normal mode
+;       mod + space - switches to normal mode
+
+;   Other modes?
+
+;   General shortcuts used independant of active mode
+;     win + z - launches firefox
+;     win + shift + z - launches chrome and automatically searches for most recent string in clipboard
+;     mod + shift + q - closes active window with alt + F4
+;     mod + enter - launches terminal with my custom aliases activated
+;     mod + x - launch screen clipper
+;     mod + n - launch notepad++
+;     mod + g - launch github gui (just person the fuck up and go back to using the command line you dolt!)
+
+; other features
+;   ctrl is remapped to escape if tapped, but remains as ctrl when pressed (I remapped capslock to left ctrl in my registry so that this acts like the "vim key")
+;   any time the current keyboard mode is switched, an unobtrusive tooltip is shown in the upper left corner of the screen indicating the new mode.
+;   ctrl + enter - reloads this script
+
+
+; -----------------------------------------------------
+; PART 2
+
+; other considerations
+
+;   How many modes/layers should there be?  right now mouse mode and vim command mode are consolidated into one.  
+;     Is this good? It makes the interface easier to use having fewer modes/layers
+
+;   using key combos to trigger mode switching or using mod keys each have pros and cons
+;      both feel awful in some situations
+;      consider using both?  keyboard shortcut for setting the current mode, but a modkey let's you use that key in it's other mode
+;      example: while typing in insert mode, one wants to move up a few lines quickly and resume typing.  using a modkey to do something like
+;        ALT + k to jump up a line without switching modes would feel nice
+;      however, having to hold down all these mod keys(of which I seem to be running out) could take too many fingers and be annoying as well.
+;        this is why hitting a combo like mod + w to switch to mouse mode and then controlling the mouse solely with wasd, no other keys being held feels great
+;        but while in mouse mode one may want to quickly type a w.  use a mode key like ALT + w to be able to hit it without having to switch modes several times
+;     using ALT + as a mod key would prevent using standard file-menu shortcuts that are widely used in widows and linux
+;   original version cycled through layers instead of toggling them.  Does this have a use?
+
+;   using the ctrl = ctrl || esc script interferes with the ctrl functionality in mouse mode.  wat do?
+;     I think it might also be occasionally interfering with commands I commonly use like Ctrl + a
+
+;   shift + backspace sounds like a nice shortcut for delete (I have several keyboards with no delete key, which is occasionally useful)
+;     however, holding shift while pressing backspace interferes with firefox/windows and prevents it from detecting the backspace command
+;     this could perhaps be overridden, but is a limitation of the browser, not of AHK.
+;     is there a better key combo?  Alt + Backspace? something else?
+
+;   numpad mode:
+;     right now:
+;       'm', ',', '.' = 1, 2, 3 ;  j, k, l = 4, 5, 6 ;  u, i, o = 7, 8, 9 ;  space = 0
+;     previously I used:
+;       j, k, l = 1, 2, 3 ;  u, i, o = 4, 5, 6 ;  m = 0
+;       This let me just keep 7, 8, and 9 as the same keys, which is nice.  I switched in order for this keypad to be able to be supported on a 30% 
+;         keyboard (where the number keys are secondary functions of the top qwerty row)
+
+;   keyboard shortcut for disabling, toggling, or stopping this script in the event of an unforseen situation at an inopportune moment (i can see this ocurring during gaming)
+;      being able to toggle the vim controls while using the browser has proved useful.  it occasionally breaks weird websites
+
+;   autohotkey supports tooltip and input popups.  Could this be used for something useful?
+;     build DMenu-style application launcher instead of relying on external application?
+
+;   chording ideas:
+;     f+1 chord = F1 key, (or f+q chord = F1 key for 40% style chording)
+;     compose vim style statements (example: 100j moves cursor down 100 lines)
+
+;   shortcuts for backspace and delete (shift+backspace) for when using a weird keyboard
+;   shortcuts for Home, End, PgUp, PgDn would be pretty useful
+
+;   consider timer-based mode switching? (ex. mousemode times out if no input is detected after a certain persiod of time)
+
+;   previously had a key combo for locking the active window to being "always on top", which occasionally comes in handy.  Should this be reimplemented and to what keys?
+
+;   employ application-context shortcuts? (#ifActiveWindow firefox)
+
+;   What should be the keycombos or mod keys used to switch modes/functions?
+
+;   if I ever get the design of this interface sorted out, I would love to program a mechanical keyboard with custom firmware to employ these
+;     shortcuts for me, so that it sends the actual OS keycodes and is useable on any system without installation.
+;     support OS-detection in order to ensure cross-platform support?
+
+;  implement keys I never use like scroll lock, numlock, whatever that thing under the tilde is? (chill out, duder, don't worry about it)
+
+;  will actualizing this script get me laid, and if so by whom?
