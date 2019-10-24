@@ -1,0 +1,73 @@
+
+Modes:
+0: insert
+1: command
+2: numpad
+3: mouse
+4: disabled(not yet implemented
+
+Global Commands:
+Ctrl+Enter: reload this script
+alt+j|k|h|l: arrow keys from any mode
+alt+g: home
+alt+shift+g: end
+alt+/: ctrl+f
+alt+backspace: delete
+alt+r: F5
+
+mod+q: alt+f4
+mod+enter: custom terminal
+alt+w|a|s|d: mouse movement
+alt+q: left click
+alt+e: right click
+alt+z: toggle middle click
+shift+q: toggle left click
+
+Command Mode:
+  ?: display this document
+  i: insert mode
+  I: home, insert mode
+  a: insert mode
+  A: end, insert mode
+  Space: PgDn
+  b: PgUp (not yet working)
+  u: CTRL+z
+  U: Ctrl+y (not yet working
+  d: home, shift+end, delete
+  Ctrl+s: Ctrl+s
+  mod+j: Alt+tab
+  mod+k: shift+alt+tab
+  mod+h: mod+tab
+  mod+l: enter (not yet working)
+  ctrl+j: ctrl+tab
+  ctrl+k: shift+ctrl+tab
+  j,k,h,l: down, up, left, right arrows
+  shift+j|k|h|l: shift+down|up|left|right
+  g: Ctrl+home(scroll to top)
+  G: Ctrl+end(scroll to bottom)
+  /: ctrl+f
+  r: F5
+  n: Ctrl+G(search next)
+  N: ctrl+alt+g(search back)
+  ctrl+n: numpad mode
+  m: numpad mode 
+  x:: Ctrl+w (close tab in firefox
+  X: ctrl+t (undo close tab in firefox)
+  shift+e: F10 (right click menu in explorer)
+  y: ctrl+c
+  Y: ctrl+x
+  p: ctrl+v
+
+Mouse Mode:
+  w,a,s,d: up, left, right, down mouse movement
+  ctrl: mod faster
+  shift: mod slower
+  q: left click
+  e: right click
+  shift+q: toggle left click
+
+Numpad Mode:
+  j,k,l,u,i,o,7,8,9:1,2,3,4,5,6,7,8,9
+  0: 0
+  m: 0
+  Esc: return to command mode

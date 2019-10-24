@@ -23,77 +23,101 @@ RemoveToolTip:
 ;reload this script
 ^Enter:: Run, "C:\Users\Delta_6\Desktop\Literal Garbage\ahkscripts\autohotkey-scripts\simple.ahk"
   return
-
 ;-------------------------------
-;toggle vim mode experiment
-;modes: 0 = insert, 1 = vim, 2 = numpad, 3 = disabled(not yet implemented)
+;TODO:
+;fix b in command mode
+;assign delete (x?)
+;set better command for mod+tab (currently mod+h and mod+space)
+;finish help
+;-------------------------------
+;modes:
+;0 = insert,
+;1 = command mode(vim),
+;2 = numpad,
+;3 = mouse,
+;4 = disabled(not yet implemented)
+
 mode := 0
 
-;switch to insert mode
-Esc:: mode := 1
-
-;vim mode
+;command (vim) mode
 #if (mode = 1)
 	{
-		i:: mode := 0
-		+i::
-			return
-		j:: send, {Down}
-		+j::
-		k:: send, {Up}
-		+k::
-		l:: send, {Right}
-		+l::
-		h:: send, {Left}
-		+h::
-		g:: send, {Home}
-		+g:: send, {End}
-		/:: send, {^f}
+		;show help!
 		+/::
+		Run, cmd /c vim "C:\Users\Delta_6\Desktop\Literal Garbage\ahkscripts\autohotkey-scripts\commands"
+		return
+		
+		;set mouse mode
+		s:: mode:=3
+		;set insert mode
+		i:: mode := 0
+		+i:: 
+			send, {home}
+			mode := 0
+			return
+		Space::PgDn
+		b::PgUp
+		u::^z
+		;+u up::^y
+		a:: mode := 0
+		+a::
+			send, {end}
+			mode := 0
+			return
+		d::
+			send, {home}
+			send, +{end}
+			send, {delete}
+			return
+		^s::^s
+		#j::!Tab
+		#k::+!Tab
+		#h::#Tab
+		#l::Enter
+		#Space::#Tab
+		^j::^Tab
+		^k::+^Tab
+		j:: send, {Down}
+		k:: send, {Up}
+		l:: send, {Right}
+		h:: send, {Left}
+		+j:: send, +{Down}
+		+k:: send, +{Up}
+		+l:: send, +{Right}
+		+h:: send, +{Left}
+		g:: send, ^{Home}
+		+g:: send, ^{End}
+		/:: ^f
 		r:: send, {F5}
 		+r::
+			return
 		n:: send, {^g}
 		+n:: send, {^!g}
 		^n:: mode := 2
-		t:: send, {^t}
+		t::^t
 		+t::
-		;x:: send, {^F4}
-		;+x:: send, {^+n}
+			return
+		;set x to delete?
+		x::send, ^w
+		+x:: ^+t
+		
 		m:: mode := 2
 		+m::
-		q::MouseClick, left
-		+q::
-		!q::MouseClick, left
-		w::MouseMove, 0, -MouseSpeed, 0, R
-		^w::MouseMove, 0, -MouseSpeed * ModSpeed, 0, R
-		+w::MouseMove, 0, -MouseSpeed / ModSpeed, 0, R
-		e::MouseClick, right
-		!e::MouseClick, right
-		+e::MouseClick, right
-		y::
-		+y::
-		u::
-		+u::
+		q::
+		w::
+		e::
+			return
+		+e::send, F10
+		y::send, ^c
+		+y::send, ^x
+		p::send, ^v
+		+p::
 		o::
 		+o::
-		p::
-		+p::
-			return
-		a::MouseMove, -MouseSpeed, 0, 0, R
-		^a::MouseMove, -MouseSpeed * ModSpeed, 0, 0, R
-		+a::MouseMove, -MouseSpeed / ModSpeed, 0, 0, R
-		s::MouseMove, 0, MouseSpeed, 0, R
-		^s::MouseMove, 0, MouseSpeed * ModSpeed, 0, R
-		+s::MouseMove, 0, MouseSpeed / ModSpeed, 0, R
-		d::MouseMove, MouseSpeed, 0, 0, R
-		^d::MouseMove, MouseSpeed * ModSpeed, 0, 0, R
-		+d::MouseMove, MouseSpeed / ModSpeed, 0, 0, R
 		f::
 		+f::
 		z::
 		+z::
-		x::
-		+x::
 		c::
 		+c::
 		v::
@@ -119,9 +143,36 @@ Esc:: mode := 1
 		[::
 		]::
 		\::
-		
-		`::
+		`;::
+		'::
 			return
+	}
+#if
+
+;mouse mode
+#if (mode = 3)
+	{
+		;mouse movement
+		a::MouseMove, -MouseSpeed, 0, 0, R
+		^a::MouseMove, -MouseSpeed * ModSpeed, 0, 0, R
+		+a::MouseMove, -MouseSpeed / ModSpeed, 0, 0, R
+		s::MouseMove, 0, MouseSpeed, 0, R
+		^s::MouseMove, 0, MouseSpeed * ModSpeed, 0, R
+		+s::MouseMove, 0, MouseSpeed / ModSpeed, 0, R
+		d::MouseMove, MouseSpeed, 0, 0, R
+		^d::MouseMove, MouseSpeed * ModSpeed, 0, 0, R
+		+d::MouseMove, MouseSpeed / ModSpeed, 0, 0, R
+
+		q::MouseClick, left
+		+q::
+		!q::MouseClick, left
+		w::MouseMove, 0, -MouseSpeed, 0, R
+		^w::MouseMove, 0, -MouseSpeed * ModSpeed, 0, R
+		+w::MouseMove, 0, -MouseSpeed / ModSpeed, 0, R
+		e::MouseClick, right
+		!e::MouseClick, right
+		;+e::MouseClick, right
+
 		;diagonal mouse movement
 		~w & a::MouseMove, -MouseSpeed, -MouseSpeed, 0, R
 		~a & w::MouseMove, -MouseSpeed, -MouseSpeed, 0, R
@@ -131,11 +182,9 @@ Esc:: mode := 1
 		~s & a::MouseMove, -MouseSpeed, MouseSpeed, 0, R
 		~s & d::MouseMove, MouseSpeed, MouseSpeed, 0, R
 		~d & s::MouseMove, MouseSpeed, MouseSpeed, 0, R
-		
-		;:: this is a comment (fix this to disable ; key) 
-		return
+			return
 	}
-#if
+	#if
 
 ;num mode
 #if (mode = 2)
@@ -214,7 +263,8 @@ Esc:: mode := 1
 
 lctrl up::
 	if (time<=3)
-		send {escape}
+		send, {Esc}
+		mode := 1
 	;else
 		;send {lctrl}
   return
