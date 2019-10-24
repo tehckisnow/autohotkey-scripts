@@ -25,7 +25,6 @@ RemoveToolTip:
   return
 ;-------------------------------
 ;TODO:
-;fix b in command mode
 ;assign delete (x?)
 ;set better command for mod+tab (currently mod+h and mod+space)
 ;finish help
@@ -122,7 +121,6 @@ mode := 0
 		+c::
 		v::
 		+v::
-		b::
 		+b::
 		,::
 		.::
