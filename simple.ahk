@@ -38,9 +38,67 @@ RemoveToolTip:
 
 mode := 0
 
+;insert mode
+#if (mode = 0)
+	{
+		;disable
+		+Esc:: mode:=4
+		
+		;tap capslock(left control) for esc, hold for lctrl
+~lctrl::
+	send {lctrl}
+	time:=0
+	while (getKeyState(trim(a_thishotkey, "~*<>!#^+"), "P"))
+	{
+		sleep, 100
+		time+=1
+	}
+	toolTip
+  return
+
+lctrl up::
+	if (time<=3)
+		send, {Esc}
+		mode := 1
+	;else
+		;send {lctrl}
+  return
+	}
+	#if
+
+;disabled
+#if (mode = 4)
+	{
+		+Esc:: mode:=1
+	}
+	#if
+
 ;command (vim) mode
 #if (mode = 1)
 	{
+		;disable
+		+Esc:: mode:=4
+
+		;tap capslock(left control) for esc, hold for lctrl
+~lctrl::
+	send {lctrl}
+	time:=0
+	while (getKeyState(trim(a_thishotkey, "~*<>!#^+"), "P"))
+	{
+		sleep, 100
+		time+=1
+	}
+	toolTip
+  return
+
+lctrl up::
+	if (time<=3)
+		send, {Esc}
+		mode := 1
+	;else
+		;send {lctrl}
+  return
+
 		;show help!
 		+/::
 		Run, cmd /c vim "C:\Users\Delta_6\Desktop\Literal Garbage\ahkscripts\autohotkey-scripts\commands"
@@ -56,6 +114,7 @@ mode := 0
 			return
 		Space::PgDn
 		b::PgUp
+		!Space::!Space ;prevent launchy from being disabled
 		u::^z
 		;+u up::^y
 		a:: mode := 0
@@ -150,6 +209,8 @@ mode := 0
 ;mouse mode
 #if (mode = 3)
 	{
+		Esc::mode:=1
+
 		;mouse movement
 		a::MouseMove, -MouseSpeed, 0, 0, R
 		^a::MouseMove, -MouseSpeed * ModSpeed, 0, 0, R
@@ -199,6 +260,7 @@ mode := 0
 	0::send, 0
 	m::send, 0
 	return
+	
 	}
 #if
 ;--------------------------------
@@ -241,13 +303,17 @@ mode := 0
 #n::Run, notepad++.exe
 #Enter::Run, cmd /K C:\Users\"Delta_6"\Desktop\"Literal Garbage"\aliases.cmd
 
+;alternate key to revert to command mode; used for cases like wanting to switch back to command mode while a browser page is loading (esc will stop loading of the page)
++Esc::mode := 1
+;display right-click menu options
++Enter::+F10
+
 #+z::
 	Send, ^c
 	ClipWait ;waits for the clipboard to have content
 	Run, chrome.exe "%clipboard%
   Return
 
-;tap capslock(left control) for esc, hold for lctrl
 ~lctrl::
 	send {lctrl}
 	time:=0
