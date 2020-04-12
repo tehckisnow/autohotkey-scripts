@@ -1,0 +1,113 @@
+
+
+usability workflow:
+
+vscode:
+	open/close explore bar
+	switch focus between focus bar and main panel
+	open/close terminal
+	switch focus between terminal and main panel
+	search thing at top?
+
+control youtube videos w keyboard
+
+1. launch programs using only keyboard
+check
+	windows key + search
+	windows key + taskbar number
+	alt+space(launchy)
+
+navigate between windows
+nav between documents
+	check, but these could be improved possibly?
+		(ctrl + up/down)
+		
+open/close documents
+(accessing 'alt' menu at top when in input mode is often problemsome)
+	solution(new key combo for arrow keys?)
+	solution(don't use input mode to access that menu)
+
+new key combo to switch to command mode without pressing esc
+	solution(control key ?)
+	solution(holding either esc or control key instead of tapping already works)
+
+switch between documents more easily (ctrl+tab for vscode and firefox)
+
+running/testing docuents more easily 
+	(vscode plugin?)
+	(something with command prompt?)
+
+switch panes in explorer more easily
+right-click menu in explorer
+
+improve mouse mode usabiility
+
+in explorer, ctrl+n to open a new explorer windows
+ctrl+shift+n to create new folder
+
+how to position explorer windows quickly using the keyboard?
+
+launchy
+
+ctrl+alt+tab nav between open windows with arrow keys
+
+remap win+L?
+	(win+shift+l?)
+
+minimize current window
+	(win+m and win+d minimize all windows)
+
+adjust vim keys to be able to be used as arrow keys while alt is being pressed
+	(this will help with both the alt menu and with ctrl+tab app switching)
+
+adjust vim keys to support ctrl+arrow so that moving through text can be faster
+
+adjust vim keys to support:
+	win+up(maximize window)
+	win+down(minimize current screen)
+	win+left/right (snap to sides)
+	
+------------------------------------
+ctrl + left/right (move cursor to next/prev word)
+ctrl+shift+esc (open task manager)
+alt+enter (open properties for selected item in explorer)
+win+period (enter rearrange mode)
+	while holding win:
+		left/right(move border)
+		up(maximize window)
+		down(close window)
+
+consider registry edit to add a link to my custom cmd prompt to the right-click menu
+
+vsCode keyboard shortcuts:
+	shift+alt+right/left to expand/shrink selection between tags in html
+	alt+up/down (moves current line up/down)
+	alt+shift+up/down (copy current line up/down)
+	ctrl+D (add next occurance to selection to change multiple lines at once)
+	ctr+alt+shift+down (when using ctrl+d, this adds only the occurances immediately below the selected)
+		collapse/expand all
+	ctrl+shift+[/] (collapse/expand current item)
+	Ctrl+b (toggle explorer panel)
+	ctrl+up/down to navigate document tabs (easier than ctrl+tab)
+	
+	the following come from https://blog.logrocket.com/learn-these-keyboard-shortcuts-to-become-a-vs-code-ninja/
+	
+	ctrl+\ (split current tab)
+	ctrl+1/2/3... (jump to 1st, 2nd, 3rd,... split panel)
+	ctrl+0 (open explorer panel)
+	alt+left/right (navigate forward/backward in file history[instead of ctrl+tab])
+	ctrl+t(find code)
+	ctrl+g(go to line)
+	ctrl+u(jump back)
+	f12 (jump to definition)
+	alt+f12 (peek at implementation)
+	shift+f12(peek at references)
+	f2 (change name of symbol in entire document)
+	f8 (look at error)
+	set shortcut to 'show hover' command
+	alt+shift+left/right (shrink/expand selection based on scope)
+	ctrl+` (open terminal)
+	ctrl+shift+p (open command pallette)
+	
+	
+better line select

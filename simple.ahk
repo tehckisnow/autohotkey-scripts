@@ -1,7 +1,7 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SetWorkingDir %A_ScriptDir%\..\..\..  ; Ensures a consistent starting directory.
 
 #SingleInstance, Force
 CoordMode, ToolTip, Screen
@@ -21,107 +21,52 @@ RemoveToolTip:
 	return
 
 ;reload this script
-^Enter:: Run, "C:\Users\Delta_6\Desktop\Literal Garbage\ahkscripts\autohotkey-scripts\simple.ahk"
+^Enter:: Run, "C:\Users\Donna\Desktop\Chet\code\ahk\autohotkey-scripts-master\simple.ahk"
   return
 ;-------------------------------
 ;TODO:
 ;assign delete (x?)
 ;set better command for mod+tab (currently mod+h and mod+space)
-;finish help
+
 ;-------------------------------
 ;modes:
 ;0 = insert,
 ;1 = command mode(vim),
-;2 = numpad,
+;2 = <removed> (numpad mode)
 ;3 = mouse,
-;4 = disabled(not yet implemented)
+;4 = disable command mode
 
 mode := 0
 
-;insert mode
-#if (mode = 0)
-	{
-		;disable
-		+Esc:: mode:=4
-		
-		;tap capslock(left control) for esc, hold for lctrl
-~lctrl::
-	send {lctrl}
-	time:=0
-	while (getKeyState(trim(a_thishotkey, "~*<>!#^+"), "P"))
-	{
-		sleep, 100
-		time+=1
-	}
-	toolTip
-  return
-
-lctrl up::
-	if (time<=3)
-		send, {Esc}
-		mode := 1
-	;else
-		;send {lctrl}
-  return
-	}
-	#if
-
-;disabled
-#if (mode = 4)
-	{
-		+Esc:: mode:=1
-	}
-	#if
+;re-enable command mode
+	^Esc:: mode:= 1
 
 ;command (vim) mode
 #if (mode = 1)
 	{
-		;disable
-		+Esc:: mode:=4
-
-		;tap capslock(left control) for esc, hold for lctrl
-~lctrl::
-	send {lctrl}
-	time:=0
-	while (getKeyState(trim(a_thishotkey, "~*<>!#^+"), "P"))
-	{
-		sleep, 100
-		time+=1
-	}
-	toolTip
-  return
-
-lctrl up::
-	if (time<=3)
-		send, {Esc}
-		mode := 1
-	;else
-		;send {lctrl}
-  return
-
-		;show help!
-		+/::
-		Run, cmd /c vim "C:\Users\Delta_6\Desktop\Literal Garbage\ahkscripts\autohotkey-scripts\commands"
-		return
 		
-		;set mouse mode
-		s:: mode:=3
 		;set insert mode
 		i:: mode := 0
 		+i:: 
 			send, {home}
 			mode := 0
 			return
-		Space::PgDn
-		b::PgUp
-		!Space::!Space ;prevent launchy from being disabled
-		u::^z
-		;+u up::^y
 		a:: mode := 0
 		+a::
 			send, {end}
 			mode := 0
 			return
+
+		;set mouse mode
+		+s:: mode := 3
+		
+		;disable command mode
+		^Esc:: mode:= 4
+
+		Space::PgDn
+		b::PgUp
+		u::^z
+		+u::^y
 		d::
 			send, {home}
 			send, +{end}
@@ -132,7 +77,6 @@ lctrl up::
 		#k::+!Tab
 		#h::#Tab
 		#l::Enter
-		#Space::#Tab
 		^j::^Tab
 		^k::+^Tab
 		j:: send, {Down}
@@ -147,29 +91,24 @@ lctrl up::
 		+g:: send, ^{End}
 		/:: ^f
 		r:: send, {F5}
-		+r::
-			return
 		n:: send, {^g}
 		+n:: send, {^!g}
-		^n:: mode := 2
-		t::^t
-		+t::
-			return
-		;set x to delete?
 		x::send, ^w
 		+x:: ^+t
-		
-		m:: mode := 2
+		t::^t
+		y::send, ^c
+		+y::send, ^x
+		p::send, ^v
+		+p::send, ^v
+		+e::send, F10 ;right-click menu in explorer
+		;disable keys:
+		+t::
+		+r::
+		m::
 		+m::
 		q::
 		w::
 		e::
-			return
-		+e::send, F10
-		y::send, ^c
-		+y::send, ^x
-		p::send, ^v
-		+p::
 		o::
 		+o::
 		f::
@@ -209,8 +148,6 @@ lctrl up::
 ;mouse mode
 #if (mode = 3)
 	{
-		Esc::mode:=1
-
 		;mouse movement
 		a::MouseMove, -MouseSpeed, 0, 0, R
 		^a::MouseMove, -MouseSpeed * ModSpeed, 0, 0, R
@@ -260,7 +197,6 @@ lctrl up::
 	0::send, 0
 	m::send, 0
 	return
-	
 	}
 #if
 ;--------------------------------
@@ -295,18 +231,19 @@ lctrl up::
 +!0::send, 0
 +!m::send, 0
 
+;for win7, to be able to close cmd with mod+q
+#IfWinActive, ahk_class ConsoleWindowClass
+    #q::WinClose, A
+
+#IfWinActive
+
 ;generic key combos
 #+q::Send !{F4}
 #q::Send !{F4}
 #c::Run, C:\SoftwareOK\Q-Dir\Q-Dir.exe
 #z::Run, firefox.exe
 #n::Run, notepad++.exe
-#Enter::Run, cmd /K C:\Users\"Delta_6"\Desktop\"Literal Garbage"\aliases.cmd
-
-;alternate key to revert to command mode; used for cases like wanting to switch back to command mode while a browser page is loading (esc will stop loading of the page)
-+Esc::mode := 1
-;display right-click menu options
-+Enter::+F10
+#Enter::Run, cmd /K C:\Users\Donna\Desktop\Chet\aliases.cmd
 
 #+z::
 	Send, ^c
@@ -314,6 +251,7 @@ lctrl up::
 	Run, chrome.exe "%clipboard%
   Return
 
+;tap capslock(left control) for esc, hold for lctrl
 ~lctrl::
 	send {lctrl}
 	time:=0
@@ -328,7 +266,8 @@ lctrl up::
 lctrl up::
 	if (time<=3)
 		send, {Esc}
-		mode := 1
+		if (mode = 0)
+			mode := 1
 	;else
 		;send {lctrl}
   return
