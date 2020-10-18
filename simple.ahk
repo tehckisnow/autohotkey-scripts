@@ -1,7 +1,7 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%\..\..\..  ; Ensures a consistent starting directory.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #SingleInstance, Force
 CoordMode, ToolTip, Screen
@@ -11,17 +11,23 @@ ModSpeed := 3 ;multiplies or divides mousespeed
 LBdown := 0 ;state of toggling left mouse button (dragging)
 middle := 0
 
-;init msg
-ToolTip, Script init, 10, 10, 1
-SetTimer, RemoveToolTip, 1000
+;get username automaticall
+;%username%
 
 ;remove tooltip
 RemoveToolTip:
 	ToolTip
 	return
 
+;init msg
+ToolTip, Script init, 10, 10, 1
+SetTimer, RemoveToolTip, 1000
+
+scriptdir = "C:\Users\" + %username% + "\Desktop\Literal Garbage\code\ahk\autohotkey-scripts-master\simple.ahk"
+aliasdir = "C:\Users\" + %username% + "\Desktop\Literal Garbage\aliases.cmd"
+
 ;reload this script
-^Enter:: Run, "C:\Users\Donna\Desktop\Chet\code\ahk\autohotkey-scripts-master\simple.ahk"
+^Enter:: Run, scriptdir
   return
 ;-------------------------------
 ;TODO:
@@ -243,7 +249,7 @@ mode := 0
 #c::Run, C:\SoftwareOK\Q-Dir\Q-Dir.exe
 #z::Run, firefox.exe
 #n::Run, notepad++.exe
-#Enter::Run, cmd /K C:\Users\Donna\Desktop\Chet\aliases.cmd
+#Enter::Run, cmd /K aliasdir
 
 #+z::
 	Send, ^c
