@@ -6,6 +6,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance, Force
 CoordMode, ToolTip, Screen
 
+;switch to firefox and pause video
+SetTitleMatchMode 2
++Space::
+	WinActivate, Mozilla Firefox
+	Send, {Space}
+	Return
+
 MouseSpeed := 25 ;pixels mouse moves; modified by ModSpeed
 ModSpeed := 3 ;multiplies or divides mousespeed
 LBdown := 0 ;state of toggling left mouse button (dragging)
@@ -13,6 +20,8 @@ middle := 0
 
 ;get username automaticall
 ;%username%
+
+username = Delta_6
 
 ;remove tooltip
 RemoveToolTip:
@@ -25,11 +34,32 @@ SetTimer, RemoveToolTip, 1000
 
 scriptdir = "C:\Users\" + %username% + "\Desktop\Literal Garbage\code\ahk\autohotkey-scripts-master\simple.ahk"
 aliasdir = "C:\Users\" + %username% + "\Desktop\Literal Garbage\aliases.cmd"
+cmderdir = "C:\Users\Delta_6\Desktop\Literal Garbage\programs\cmder\Cmder.exe"
+cmdorigdir = "%windir%\system32\cmd.exe /K C:\Users\"Delta_6"\Desktop\"Literal Garbage"\aliases.cmd"
+commandscript = "C:\WINDOWS\system32\cmd.exe /K " + scriptdir
+command = "C:\WINDOWS\system32\cmd.exe"
+
+usersDir = C:\Users\
+LitG = \Desktop\Literal Garbage\
+homeDir = usersDir + username + LitG
 
 ;reload this script
-^Enter:: Run, scriptdir
+;^Enter:: Run, "C:\WINDOWS\system32\cmd.exe"
+;^Enter:: Run, "cmd.exe /K cd " + homeDir
+;^Enter:: Run, "cmd.exe /K cd `"C:\Users\" + username + "\Desktop\Literal Garbage\"
+;^Enter:: Run, cmd.exe /K cd C:\Users\ + username + \Desktop\Literal Garbage\
+^Enter:: Run, cmd.exe /K cd C:\Users\Delta_6\Desktop\Literal Garbage\
   return
+
++^Enter:: Run, cmd.exe /K C:\Users\Delta_6\Desktop\"Literal Garbage"\programs\scrcpy\scrcpy -S --window-borderless --forward-all-clicks --window-x -500 --window-y 30
 ;-------------------------------
+
+;alt + mouse left = back
+!LButton::send, !{Left}
+;alt + mouse right = forward
+!RButton::send, !{Right}
+
+
 ;TODO:
 ;assign delete (x?)
 ;set better command for mod+tab (currently mod+h and mod+space)
@@ -220,7 +250,7 @@ mode := 0
 
 !n::send, {^g}
 !+n::send, {^!g}
-!t::send, {^t}
+;!t::send, {^t}
 !x::send, {^F4}
 !+x::send, {^+n}
 
@@ -249,7 +279,9 @@ mode := 0
 #c::Run, C:\SoftwareOK\Q-Dir\Q-Dir.exe
 #z::Run, firefox.exe
 #n::Run, notepad++.exe
-#Enter::Run, cmd /K aliasdir
+
+;#Enter::Run, cmd /K aliasdir
+#Enter::Run, cmderdir
 
 #+z::
 	Send, ^c
@@ -300,18 +332,19 @@ lctrl up::
     }
     return
 
+;! REMOVED: breaks shift+q
 ;toggle left-click
-	+q::
-	{
-		if (LBdown = 0){
-			LBdown := 1
-			Click, left, down
-      ;SendInput, {LButton Down}
-		}else{
-      Click, left, up
-			;SendInput, {LButton Up}
-		}
-	}
+	; +q::
+	; {
+	; 	if (LBdown = 0){
+	; 		LBdown := 1
+	; 		Click, left, down
+  ;     ;SendInput, {LButton Down}
+	; 	}else{
+  ;     Click, left, up
+	; 		;SendInput, {LButton Up}
+	; 	}
+	; }
 
 
 ;Shift(slower)
